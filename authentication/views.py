@@ -6,6 +6,7 @@ from rest_framework import status
 
 from django.contrib.auth import get_user_model, authenticate
 from authentication.models import LoginOtp
+from email_services.email_service import login_otp_email
 
 User = get_user_model()
 
