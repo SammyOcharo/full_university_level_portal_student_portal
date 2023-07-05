@@ -12,6 +12,7 @@ class Roles(models.Model):
     
     class Meta:
         verbose_name_plural = 'roles'
+        db_table = 'roles'
 
 
 class User(AbstractUser):
@@ -25,6 +26,7 @@ class User(AbstractUser):
 
     class Meta:
         db_table = 'user'
+        
 
     def __str__(self) -> str:
         return self.email
