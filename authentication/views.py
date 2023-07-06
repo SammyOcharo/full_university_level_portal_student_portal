@@ -51,6 +51,7 @@ class StudentLoginAPIView(APIView):
             
             user = user.first()
             print(user.mobile_number)
+            print(user.password)
             
 
             allowed_roles = ['students']

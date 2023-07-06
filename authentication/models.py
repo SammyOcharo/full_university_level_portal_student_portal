@@ -38,7 +38,7 @@ class LoginOtp(models.Model):
     is_validated = models.IntegerField(default=0)
 
     class Meta:
-        db_table = 'student_login_otp'
+        db_table = 'student_activation_otp'
 
     def __str__(self):
         return self.email
