@@ -17,7 +17,6 @@ class VerifyOtpForgotPasswordSerializer(serializers.Serializer):
 
 class StudentNewPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField()
-    old_password = serializers.CharField(style={'input_type': 'password'}, trim_whitespace=False)
     new_password = serializers.CharField(style={'input_type': 'password'}, trim_whitespace=False)
     confirm_new_password = serializers.CharField(style={'input_type': 'password'}, trim_whitespace=False)
 

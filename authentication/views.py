@@ -381,7 +381,6 @@ class StudentNewPasswordAPIView(APIView):
                 }, status=status.HTTP_400_BAD_REQUEST)
             
             email = request.data.get('email')
-            old_password = request.data.get('old_password')
             new_password = request.data.get('new_password')
             confirm_new_password = request.data.get('confirm_new_password')
 
@@ -412,26 +411,11 @@ class StudentNewPasswordAPIView(APIView):
                     'status': False,
                     'message': f'user with this role {user.role.short_name} not allowed to access this portal',
                 }, status=status.HTTP_400_BAD_REQUEST)
-
-            password_match = user.check_password(old_password)
-            
-            print('password_match: ', password_match)
-            if not password_match:
-                return Response({
-                    'status': False,
-                    'message': 'Incorrect old password'
-                }, status=status.HTTP_400_BAD_REQUEST)
             
             if new_password != confirm_new_password:
                 return Response({
                     'status': False,
                     'message': 'new password and confirm passoword mismatch'
-                }, status=status.HTTP_400_BAD_REQUEST)
-            
-            if old_password == new_password:
-                return Response({
-                    'status': False,
-                    'message': 'Bad Request. No password reuse'
                 }, status=status.HTTP_400_BAD_REQUEST)
             
             if len(new_password) < 5:
