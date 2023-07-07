@@ -38,7 +38,7 @@ def password_reset_otp_email(email, otp):
         email_subject = 'Password Reset OTP'
         SYSTEM_EMAIL = settings.EMAIL_HOST_USER
         to = email
-        message = f'Dear Admin, use otp {otp} to complete your request to change password.' 
+        message = f'Dear Student, use otp {otp} to complete your request to change password.' 
 
         html_context = render_to_string("index.html",
                                          {'title': email_subject,
@@ -66,7 +66,7 @@ def password_resend_reset_otp_email(email, otp):
         email_subject = 'Password Resend Reset OTP'
         SYSTEM_EMAIL = settings.EMAIL_HOST_USER
         to = email
-        message = f'Dear Admin, you requested for a resend of otp, use otp {otp} to complete your request to change password.' 
+        message = f'Dear Student, you requested for a resend of otp, use otp {otp} to complete your request to change password.' 
 
         html_context = render_to_string("index.html",
                                          {'title': email_subject,

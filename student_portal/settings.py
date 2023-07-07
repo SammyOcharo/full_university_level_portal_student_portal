@@ -31,6 +31,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication.apps.AuthenticationConfig',
     'rest_framework',
+    'student_ticket.apps.StudentTicketConfig',
+    'student_dashboard.apps.StudentDashboardConfig',
+    'student_career.apps.StudentCareerConfig',
+    'student_hostel.apps.StudentHostelConfig',
+    'student_message_center.apps.StudentMessageCenterConfig'
 ]
 AUTH_USER_MODEL = 'authentication.User'
 
