@@ -48,5 +48,6 @@ class StudentProfileAPIView(APIView):
             print(str(e))
 
             return Response({
-
-            })
+                'status': False,
+                'message': 'Could not view profile'
+            }, status=status.HTTP_400_BAD_REQUEST)
