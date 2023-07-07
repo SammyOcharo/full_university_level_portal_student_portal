@@ -16,6 +16,7 @@ class StudentProfileAPIView(APIView):
     def get(self, request):
         try:
             current_user = request.user
+            print(current_user)
 
             allowed_roles = ['students']
 
@@ -42,7 +43,6 @@ class StudentProfileAPIView(APIView):
                 'status': True,
                 'message': serializer.data
             }, status=status.HTTP_200_OK)
-
 
         except Exception as e:
             print(str(e))
