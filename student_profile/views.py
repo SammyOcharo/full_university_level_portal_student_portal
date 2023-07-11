@@ -149,5 +149,5 @@ class StudentChangePasswordAPIView(APIView):
             
             return Response({
                 'status': False,
-                'message': 'Could not update password'
+                'message': 'Error updating password!'
             }, status=status.HTTP_400_BAD_REQUEST)
