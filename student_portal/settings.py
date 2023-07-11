@@ -19,6 +19,14 @@ DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
+DEFAULT_RENDERER_CLASSES = (
+    'rest_framework.renderers.JSONRenderer',
+)
+
+if DEBUG:
+    DEFAULT_RENDERER_CLASSES = DEFAULT_RENDERER_CLASSES + (
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
 
 # Application definition
 
@@ -35,7 +43,9 @@ INSTALLED_APPS = [
     'student_dashboard.apps.StudentDashboardConfig',
     'student_career.apps.StudentCareerConfig',
     'student_hostel.apps.StudentHostelConfig',
-    'student_message_center.apps.StudentMessageCenterConfig'
+    'student_message_center.apps.StudentMessageCenterConfig',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 AUTH_USER_MODEL = 'authentication.User'
 
@@ -48,6 +58,22 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES,
+    'PAGE_SIZE': 10,
+    'EXCEPTION_HANDLER': 'utils.api_custom_exception.custom_exception_handler',
+
+}
+
 
 ROOT_URLCONF = 'student_portal.urls'
 
