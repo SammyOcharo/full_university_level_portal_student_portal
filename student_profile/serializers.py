@@ -10,7 +10,6 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         exclude = ('password',)
 
 class StudentUpdatePasswordSerializer(serializers.Serializer):
-    email = serializers.EmailField()
     current_password = serializers.CharField(style={'input_type': 'password'}, trim_whitespace=False)
     new_password = serializers.CharField(style={'input_type': 'password'}, trim_whitespace=False)
     confirm_new_password = serializers.CharField(style={'input_type': 'password'}, trim_whitespace=False)
