@@ -62,7 +62,6 @@ class CourseUnits(models.Model):
     def __str__(self):
         return self.unit_name
 
-# Create your models here.
 class Student(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     student_name = models.CharField(max_length=50)
@@ -85,7 +84,6 @@ class Student(models.Model):
 # Enrollment Management
 
 class Enrollment(models.Model):
-    # Enrollment fields
     STATUS_CHOICES = (
         ('enrolled', 'Enrolled'),
         ('dropped', 'Dropped'),
@@ -101,17 +99,16 @@ class Enrollment(models.Model):
 # Grading and Assessment
 
 class Grading(models.Model):
-    # Grading fields
     unit = models.ForeignKey('CourseUnits', on_delete=models.CASCADE, related_name='gradings')
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='gradings')
     grade = models.DecimalField(max_digits=5, decimal_places=2)
-    # Add other grading fields as needed
 
 class Assessment(models.Model):
-    # Assessment fields
     unit = models.ForeignKey('CourseUnits', on_delete=models.CASCADE, related_name='assessments')
     name = models.CharField(max_length=100)
     weightage = models.DecimalField(max_digits=5, decimal_places=2)
+
+
 # Attendance Tracking
 # Communication and Notifications
 # Resources and Materials
