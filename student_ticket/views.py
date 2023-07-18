@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from django.contrib.auth import get_user_model
+from student_ticket.models import StudentTicket
 
 User = get_user_model()
 from student_ticket.serializers import StudentCreateTicketSerializer
@@ -67,7 +68,17 @@ class StudentCreateTicketAPIView(APIView):
                     'message': 'Student portal account is suspended check in with IT'
                 }, status=status.HTTP_400_BAD_REQUEST)
             
+            if not StudentTicket.objects.create(user = user, message=message):
+                return Response({
+                    'status': False,
+                    'message': 'Ticket not saved !'
+                }, status=status.HTTP_400_BAD_REQUEST)
             
+            return Response({
+                'status': True,
+                'message': 'Ticket submitted!'
+            },status=status.HTTP_200_OK )
+        
         except Exception as e:
             print(str(e))
 
