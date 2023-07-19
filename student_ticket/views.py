@@ -1,4 +1,5 @@
 import re
+import uuid
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -29,8 +30,6 @@ class StudentCreateTicketAPIView(APIView):
                 }, status=status.HTTP_400_BAD_REQUEST)
             
             message = request.data.get('message')
-            password = request.data.get('password')
-
            
             
             user = User.objects.filter(username=current_user)
@@ -68,7 +67,12 @@ class StudentCreateTicketAPIView(APIView):
                     'message': 'Student portal account is suspended check in with IT'
                 }, status=status.HTTP_400_BAD_REQUEST)
             
-            if not StudentTicket.objects.create(user = user, message=message):
+            ticket_code = uuid.uuid4()
+            ticket_code = str(ticket_code)[:15]
+            
+            ticket_code = ticket_code
+            
+            if not StudentTicket.objects.create(ticket_code = ticket_code, user = user, message=message):
                 return Response({
                     'status': False,
                     'message': 'Ticket not saved !'
