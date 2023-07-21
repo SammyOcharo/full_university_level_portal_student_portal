@@ -132,7 +132,70 @@ class StudentListSubmitTicketAPIView(APIView):
                     'message': 'Student portal account is suspended check in with IT'
                 }, status=status.HTTP_400_BAD_REQUEST)
             
-            serializer = StudentTicket.objects.filter(user=user)
+            tickets = StudentTicket.objects.filter(user=user)
+
+            print(tickets)
+
+            serializer = self.serializer_class(tickets, many=True)
+
+            return Response({
+                'status': True,
+                'all_tickets': serializer.data 
+            }, status=status.HTTP_200_OK)
+        
+        except Exception as e:
+            print(str(e))
+
+            return Response({
+                'status': False,
+                'message': 'Could not retrive tickets!'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+class StudentListCompletedTicketAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = StudentListSubmitTicketSerializer
+
+    def get(self, request):
+        try:
+            current_user = request.user
+           
+            user = User.objects.filter(username=current_user)
+
+            if not user.exists():
+                return Response({
+                    'status': False,
+                    'message': 'User does not exist'
+                }, status=status.HTTP_404_NOT_FOUND)
+            
+            user = user.first()
+            
+
+            allowed_roles = ['students']
+            print(user.role.short_name)
+
+            if not user.role.short_name in allowed_roles:
+                return Response({
+                    'status': False,
+                    'message': f'user with this role {user.role.short_name} not allowed to access this portal',
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            if user.status == 0:
+                return Response({
+                    'status': False,
+                    'message': 'Student portal not yet approved please contact IT.'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            if user.status == 2:
+                return Response({
+                    'status': False,
+                    'message': 'Student portal account is suspended check in with IT'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            tickets = StudentTicket.objects.filter(user=user, is_sorted=1)
+
+            print(tickets)
+
+            serializer = self.serializer_class(tickets, many=True)
 
             return Response({
                 'status': True,
