@@ -15,16 +15,18 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='StudentTicket',
+            name='Hostel',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('ticket_code', models.CharField(max_length=15)),
-                ('message', models.TextField()),
-                ('is_sorted', models.IntegerField(default=0)),
+                ('hostel_name', models.CharField(max_length=100)),
+                ('hostel_room_number', models.CharField(max_length=100)),
+                ('hostel_entry', models.DateTimeField()),
+                ('hostel_exit', models.DateTimeField()),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'db_table': 'student_tickets',
+                'verbose_name_plural': 'hostels',
+                'db_table': 'hostel',
             },
         ),
     ]
