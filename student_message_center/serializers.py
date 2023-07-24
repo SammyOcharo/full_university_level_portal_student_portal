@@ -2,7 +2,8 @@ from rest_framework import serializers
 
 
 class StudentSendMessageSerializer(serializers.Serializer):
-    pass
+    message = serializers.CharField()
+    recipient = serializers.EmailField()
 
 
 class StudentDeleteMessageSerializer(serializers.Serializer):
