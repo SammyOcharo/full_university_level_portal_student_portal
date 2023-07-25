@@ -7,6 +7,7 @@ User = get_user_model()
 class StudentMessaging(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField()
+    thread_id = models.CharField(max_length=50)
     timestamp = models.DateTimeField(auto_now_add=True)
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
     is_read = models.BooleanField(default=False)

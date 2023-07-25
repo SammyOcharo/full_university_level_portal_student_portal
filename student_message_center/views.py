@@ -1,4 +1,5 @@
 import re
+import uuid
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -56,6 +57,8 @@ class StudentSendMessageAPIView(APIView):
            
             
             user = User.objects.filter(username=current_user)
+
+            thread_id = uuid.uuid4().hex
             
 
             if not user.exists():
@@ -91,7 +94,7 @@ class StudentSendMessageAPIView(APIView):
                 }, status=status.HTTP_400_BAD_REQUEST)
             
             #save to db
-            StudentMessaging(user=user, message=message, recipient=recipient)
+            StudentMessaging(user=user, message=message, recipient=recipient, thread_id=thread_id)
 
             return Response({
                 'status': True,
