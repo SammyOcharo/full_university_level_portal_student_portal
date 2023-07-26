@@ -11,7 +11,7 @@ class StudentDeleteMessageSerializer(serializers.Serializer):
     thread_id = serializers.CharField()
 
 class StudentDeleteThreadSerializer(serializers.Serializer):
-    pass
+    thread_id = serializers.CharField()
 
 class StudentViewMessageSerializer(serializers.ModelSerializer):
     pass
