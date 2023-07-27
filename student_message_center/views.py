@@ -15,6 +15,18 @@ class StudentViewMessageAPIView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = StudentViewMessageSerializer
 
+    def get(self, request):
+        try:
+            current_user = request.user
+
+        except Exception as e:
+            print(str(e))
+
+            return Response({
+                'status': False,
+                'message': 'Could not view message!'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
 class StudentSendMessageAPIView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = StudentSendMessageSerializer
