@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from student_message_center.models import StudentMessaging
+
 
 class StudentSendMessageSerializer(serializers.Serializer):
     message = serializers.CharField()
@@ -14,4 +16,6 @@ class StudentDeleteThreadSerializer(serializers.Serializer):
     thread_id = serializers.CharField()
 
 class StudentViewMessageSerializer(serializers.ModelSerializer):
-    pass
+    class meta:
+        model = StudentMessaging
+        fields = '__all__'
