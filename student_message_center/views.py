@@ -53,7 +53,7 @@ class StudentViewMessageAPIView(APIView):
             
             messages = StudentMessaging.objects.filter(user=user).order_by('-id')
 
-            serializer = self.serializer_class(messages)
+            serializer = self.serializer_class(messages, many=True)
 
             return Response({
                 'status': True,
