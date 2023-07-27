@@ -15,6 +15,60 @@ class StudentViewMessageAPIView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = StudentViewMessageSerializer
 
+    def get(self, request):
+        try:
+            current_user = request.user
+
+            user = User.objects.filter(email=current_user)
+
+            if not user.exists():
+                return Response({
+                    'status': False,
+                    'message': 'Student not found'
+                }, status=status.HTTP_404_NOT_FOUND)
+            
+            user = user.first()
+
+
+            allowed_roles = ['students']
+            print(user.role.short_name)
+
+            if not user.role.short_name in allowed_roles:
+                return Response({
+                    'status': False,
+                    'message': f'user with this role {user.role.short_name} not allowed to access this portal',
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            if user.status == 0:
+                return Response({
+                    'status': False,
+                    'message': 'Student portal not yet approved please contact IT.'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            if user.status == 2:
+                return Response({
+                    'status': False,
+                    'message': 'Student portal account is suspended check in with IT'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            messages = StudentMessaging.objects.filter(user=user).order_by('-id')
+
+            serializer = self.serializer_class(messages)
+
+            return Response({
+                'status': True,
+                'messages': serializer.data
+            }, status=status.HTTP_200_OK)
+        
+
+        except Exception as e:
+            print(str(e))
+
+            return Response({
+                'status': False,
+                'message': 'Could not view message!'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
 class StudentSendMessageAPIView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = StudentSendMessageSerializer
