@@ -11,6 +11,8 @@ from student_message_center.serializers import StudentDeleteMessageSerializer, S
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
+#messaging views
 class StudentViewMessageAPIView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = StudentViewMessageSerializer
