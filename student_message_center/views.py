@@ -48,7 +48,7 @@ class StudentViewMessageAPIView(APIView):
             if user.status == 2:
                 return Response({
                     'status': False,
-                    'message': 'Student portal account is suspended check in with IT'
+                    'message': 'Student portal account is suspended check in with IT...'
                 }, status=status.HTTP_400_BAD_REQUEST)
             
             messages = StudentMessaging.objects.filter(user=user).order_by('-id')
