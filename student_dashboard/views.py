@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
+from student_career.models import Student
 from student_dashboard.serializers import StudentDashboardSerializer
 
 from django.contrib.auth import get_user_model
@@ -11,7 +12,6 @@ User = get_user_model()
 class StudentDashboardAPIView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_classes = StudentDashboardSerializer
-
 
     def get (self, request):
         try:
@@ -49,7 +49,9 @@ class StudentDashboardAPIView(APIView):
                     'message': 'Student portal account is suspended check in with IT...'
                 }, status=status.HTTP_400_BAD_REQUEST)
             
-            serializer = self.serializer_classes(user)
+            student = Student.objects.filter(user=user)
+            
+            serializer = self.serializer_classes(student, many=True)
 
             return Response({
                 'status': True,
